@@ -7,7 +7,7 @@
 - Refer the link below to verify all steps required to setup kube cluster
 	https://csye7374.tejasparikh.com/lectures/04/#setup-kubernetes-cluster-using-kops
 
-***CREATE COMMAND TO SETUP KUBE CLUSTER WITH 1 MASTER AND 3 WORKER NODES***
+***CREATE COMMAND TO SETUP KUBE CLUSTER WITH 1 MASTER AND 3 WORKER NODES***  
 	`$ kops create cluster --zones us-east-1a --node-size t2.medium --master-size t2.medium $NAME --yes`
 - Note: Modify the instane type as required
 
