@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: redis-slave
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis
+      role: slave
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: slave
+        tier: backend
+    spec:
+      containers:
+      - name: redis-slave
+        image: gcr.io/google_samples/gb-redisslave:v1
+        resources:
+          limits:
+            cpu: "0.1"
+            memory: "32Mi"
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        ports:
+          - containerPort: 6379
+            name: slave
+        livenessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 15
+          periodSeconds: 20
+      - name: sentinel
+        image: k8s.gcr.io/redis:v1
+        env:
+          - name: redis-sentinel
+            value: "true"
+        ports:
+          - name: sentinel
+            containerPort: 26379
+      volumes:
+        - name: data
+          emptyDir: {}
