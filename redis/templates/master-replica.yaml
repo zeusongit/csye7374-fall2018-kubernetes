@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: redis-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+        tier: backend
+    spec:
+      containers:
+      - name: redis-master
+        image: k8s.gcr.io/redis:e2e  # or just image: redis
+        env:
+        - name: MASTER
+          value: "true"
+        ports:
+          - name: redis
+            containerPort: 6379
+        resources:
+          limits:
+            cpu: "0.1"
+            memory: "32Mi"
+        livenessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        volumeMounts:
+          - mountPath: /redis-master-data
+            name: data
+      - name: sentinel
+        image: k8s.gcr.io/redis:v1
+        env:
+          - name: SENTINEL
+            value: "true"
+        ports:
+          - name: sentinel
+            containerPort: 26379
+      volumes:
+        - name: data
+          emptyDir: {}

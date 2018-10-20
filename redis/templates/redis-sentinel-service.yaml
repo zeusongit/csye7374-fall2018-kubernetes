@@ -3,11 +3,14 @@ kind: Service
 metadata:
   name: redis-sentinel
   labels:
+    app: redis
     name: sentinel
     role: service
 spec:
   ports:
-    - port: 26379
-      targetPort: 26379
+    - protocol: TCP
+      port: 26379
+      name: sentinel
   selector:
+    app: redis
     redis-sentinel: "true"

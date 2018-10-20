@@ -1,16 +1,32 @@
-***DIRECTORY STRUCTURE***
+**Redis cluster with 3 Redis servers in master/slave configuration**
+This project sets up a Redis cluster with 3 Redis servers in master/slave configuration on a kubernetes setup based off AWS
+
+**Pre-requisites**
+- A functional k8s cluster with minimum 1 master node and 3 worker nodes. Recommended instance types(considering minimum AWS related costs) are T2.Micro for both master and workers
+
+**DIRECTORY STRUCTURE**
 - All kubernetes yaml templates are present in the /redis/templates directory
-- To make setup easier, just run the `setup.sh` script to automatically provision  all the kube resources with redis server/sentinels
 
-***CONDITIONS TO RUN SETUP SCRIPT***
-- Make sure your kubernetes cluster is up and running along with the dashboard
-- Refer the link below to verify all steps required to setup kube cluster
-	https://csye7374.tejasparikh.com/lectures/04/#setup-kubernetes-cluster-using-kops
+***To setup the redis cluster, simply run the `setup.sh` script in the /redis directory***
 
-***CREATE COMMAND TO SETUP KUBE CLUSTER WITH 1 MASTER AND 3 WORKER NODES***  
-	`$ kops create cluster --zones us-east-1a --node-size t2.medium --master-size t2.medium $NAME --yes`
-- Note: Modify the instane type as required
+**Templates**
+- `master-replica.yaml`: A replicaset which will create a master redis server along with the redis sentinel
+- `master-service.yaml`: A service used to provide an endpoint to the master server
+- `slave-replica.yaml` : A replicaset which will create a 2 redis slave servers along with the redis sentinel on each of the pod
+- `redis-sentinel-service.yaml` : A service used to provide an endpoint to the redis sentinels
+- `nodeport-service.yaml` : Expose the server and sentinel ports for external access
+
+**Test the replicasets with `redis-cli`**
+- Once `setup.sh` executes, run the following commands to check if the cluster setup is in order:
+	1. `$ kubectl get pods` : You should see all pods are in running state
+	2. `$ kubectl get svc`  : You should see all services currently installed on your k8s
+	3. `$ kubectl describe pod POD-NAME` : Get more details about a pod using this command
+- Manual Step*: In your AWS console, update the incoming traffic on your master and worker nodes with a Custom TCP in the range 30000-35000 and a CIDR of 0.0.0.0/0.
+- Run `$ redis-cli -h <HOSTNAME> -p <PORT_NUMBER>`
+- Type `ping`. You should receive a response `PONG`. You can execute other redis-cli commands once you get a successful response from the console
+
 
 ***TEARDOWN CREATED RESOURCES***
 - Run the `teardown.sh` script to terminate **only** the redis resources on the k8s cluster.
 - **This will not terminate the k8s cluster in AWS. To delete the k8s cluster, run the kops delete cluster command as specified in the link above**
+
