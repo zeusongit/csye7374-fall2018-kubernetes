@@ -7,20 +7,26 @@ const REDISPORT = process.env.REDISPORT || 6379;
 
 const client = redis.createClient(REDISPORT, REDISHOST);
 client.on('error', (err) => console.error('ERR:REDIS:', err));
-
+console.log("Server started....")
 // create a server
 http.createServer((req, res) => {
 // increment the visit counter
   client.incr(os.hostname(), (err, reply) => {
+    console.log(reply)
     if (err) {
       console.log(err);
       res.end(err);
       res.status(500).send(err.message);
       return;
     }
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    client.set('my test key', 'my test value', redis.print);
+    client.get('my test key', function(error, result) {
+      if (error) throw error;
+      console.log('GET result ->', result);
+    });
     res.write(`IP hit count: ${reply}\n`);
     res.write("\nYou've hit the port " + os.hostname() + "\n"+ JSON.stringify(process.env));
+    console.log(process.env)
   });
 }).listen(process.env.HIT_PORT);
 
