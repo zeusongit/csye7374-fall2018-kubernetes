@@ -19,12 +19,17 @@ spec:
       containers:
       - name: csye7374
         imagePullPolicy: Always
-        image: docker.io/adikelkar4/csye7374:nodeapp
+        image: 503673903511.dkr.ecr.us-east-1.amazonaws.com/csye7374:nodeapp
         resources:
           requests:
             cpu: "0.1"
             memory: "32Mi"
         env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: db.pass
         - name: GET_HOSTS_FROM
           value: dns
         - name: GREETING
