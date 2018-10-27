@@ -4,8 +4,10 @@ const redis = require('redis');
 
 const REDISHOST = process.env.REDISHOST || 'localhost';
 const REDISPORT = process.env.REDISPORT || 6379;
+const REDISPASS = process.env.REDIS_PASSWORD;
 
-const client = redis.createClient(REDISPORT, REDISHOST);
+const client = redis.createClient({port: REDISPORT, host: REDISHOST, password: REDISPASS})
+// const client = redis.createClient(REDISPORT, REDISHOST, REDISPASS);
 client.on('error', (err) => console.error('ERR:REDIS:', err));
 console.log("Server started....")
 // create a server
