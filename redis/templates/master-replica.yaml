@@ -20,8 +20,13 @@ spec:
     spec:
       containers:
       - name: redis-master
-        image: k8s.gcr.io/redis:e2e
+        image: 503673903511.dkr.ecr.us-east-1.amazonaws.com/csye7374:latest
         env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: db.pass
         - name: REDIS-MASTER
           value: "true"
         - name: POD_IP
