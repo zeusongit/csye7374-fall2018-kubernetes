@@ -20,6 +20,10 @@ spec:
       - name: csye7374
         imagePullPolicy: Always
         image: 503673903511.dkr.ecr.us-east-1.amazonaws.com/csye7374:nodeapp
+        volumeMounts:
+          - name: myvolume
+            mountPath: "/etc/secrets"
+            readOnly: true
         resources:
           requests:
             cpu: "0.1"
@@ -55,3 +59,7 @@ spec:
             port: 9090
           initialDelaySeconds: 5
           periodSeconds: 5
+      volumes:
+        - name: myvolume
+          secret:
+            secretName: db-pass
