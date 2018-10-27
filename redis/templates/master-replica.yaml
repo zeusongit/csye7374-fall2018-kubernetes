@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: redis-master
-        image: redis
+        image: k8s.gcr.io/redis:e2e
         env:
         - name: REDIS-MASTER
           value: "true"
