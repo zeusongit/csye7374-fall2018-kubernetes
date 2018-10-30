@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: redis-slave
-        image: 503673903511.dkr.ecr.us-east-1.amazonaws.com/csye7374:slave
+        image: docker.io/adikelkar4/csye7374:redisslave
         resources:
           limits:
             cpu: "0.1"

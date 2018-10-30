@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: redis-master
-        image: 503673903511.dkr.ecr.us-east-1.amazonaws.com/csye7374:latest
+        image: docker.io/adikelkar4/csye7374:redismaster
         env:
         - name: REDIS_PASSWORD
           valueFrom:
