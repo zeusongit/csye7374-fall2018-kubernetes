@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: redis-master
-        image: docker.io/tata480/csye7374:redis
+        image: docker.io/adikelkar4/csye7374:redismaster
         env:
         - name: REDIS_PASSWORD
           valueFrom:
