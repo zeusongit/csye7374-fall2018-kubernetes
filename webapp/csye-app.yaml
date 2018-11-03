@@ -19,7 +19,7 @@ spec:
       containers:
       - name: csye7374
         imagePullPolicy: Always
-        image: 503673903511.dkr.ecr.us-east-1.amazonaws.com/csye7374:nodeapp
+        image: docker.io/tata480/csye7374:nodeapp
         volumeMounts:
           - name: myvolume
             mountPath: "/etc/secrets"
