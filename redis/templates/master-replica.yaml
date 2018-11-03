@@ -13,14 +13,28 @@ spec:
       tier: backend
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9121"
       labels:
         app: redis
         role: master
         tier: backend
     spec:
+      volumes:
+        - name: host-sys
+          hostPath:
+            path: /sys
+      initContainers:
+        - name: disable-thp
+          image: docker.io/adikelkar4/csye7374:redismaster
+          volumeMounts:
+            - name: host-sys
+              mountPath: /host-sys
+          command: ["sh", "-c", "echo never > /host-sys/kernel/mm/transparent_hugepage/enabled"]
       containers:
       - name: redis-master
-        image: docker.io/zeusondocker/redis_image:latest
+        image: docker.io/adikelkar4/csye7374:redismaster
         env:
         - name: REDIS_PASSWORD
           valueFrom:
@@ -47,7 +61,7 @@ spec:
           periodSeconds: 20
         volumeMounts:
           - mountPath: /redis-master-data
-            name: data
+            name: host-sys
       - name: sentinel
         image: k8s.gcr.io/redis:v1
         env:
@@ -56,6 +70,11 @@ spec:
         ports:
           - name: sentinel
             containerPort: 26379
-      volumes:
-        - name: data
-          emptyDir: {}
+      - name: redis-exporter
+        image: oliver006/redis_exporter:v0.21.1
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: 32Mi
+        ports:
+        - containerPort: 9121
