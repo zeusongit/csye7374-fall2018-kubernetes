@@ -6,13 +6,15 @@ Setup prometheus and grafana to get matrices using the commands mentioned in thi
 - `heml` installed. Run `helm version` to check this.
 
 # Run the following commands in the order mentioned to setup your prometheus deployment
-`kubectl apply -f helm_spec.yaml`  
-`kubectl apply -f redis-prometheus-svc.yaml`  
+`kubectl apply -f templates/helm_spec.yaml`  
+`kubectl apply -f templates/redis-prometheus-svc.yaml`  
 `helm repo add coreos https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/`  
 `helm init --service-account tiller`  
 `helm install coreos/prometheus-operator --name prometheus-operator --namespace monitoring`  
-`helm install coreos/kube-prometheus --name kube-prometheus --set global.rbacEnable=true --namespace monitoring`
-`kubectl apply -f service-monitor.yaml`  
+`helm install coreos/kube-prometheus --name kube-prometheus --set global.rbacEnable=true --namespace monitoring`  
+`kubectl apply -f templates/service-monitor.yaml`  
+***or***  
+Run the `prometheus_setup.sh` script  
 
 # Accessing the metrices
 You will need to port forward the necessary pods to access the prometheus and grafana dashboards. Run the following commands to achieve this  
