@@ -55,3 +55,7 @@ spec:
             port: 9090
           initialDelaySeconds: 5
           periodSeconds: 5
+      volumes:
+        - name: myvolume
+          secret:
+            secretName: db-pass
