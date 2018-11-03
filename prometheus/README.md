@@ -6,19 +6,19 @@ Setup prometheus and grafana to get matrices using the commands mentioned in thi
 - `heml` installed. Run `helm version` to check this.
 
 # Run the following commands in the order mentioned to setup your prometheus deployment
-`kubectl apply -f helm_spec.yaml`
-`kubectl apply -f redis-prometheus-svc.yaml`
-`helm repo add coreos https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/`
-`helm init --service-account tiller`
-`helm install coreos/prometheus-operator --name prometheus-operator --namespace monitoring`
+`kubectl apply -f helm_spec.yaml`  
+`kubectl apply -f redis-prometheus-svc.yaml`  
+`helm repo add coreos https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/`  
+`helm init --service-account tiller`  
+`helm install coreos/prometheus-operator --name prometheus-operator --namespace monitoring`  
 `helm install coreos/kube-prometheus --name kube-prometheus --set global.rbacEnable=true --namespace monitoring`
-`kubectl apply -f service-monitor.yaml`
+`kubectl apply -f service-monitor.yaml`  
 
 # Accessing the metrices
-You will need to port forward the necessary pods to access the prometheus and grafana dashboards. Run the following commands to achieve this 
-- **Access Prometheus** 
-`kubectl port-forward -n monitoring prometheus-kube-prometheus-0 9090` 
-Run `localhost:9090` to access 
-- **Access Grafana**
-`kubectl port-forward $(kubectl get  pods --selector=app=kube-prometheus-grafana -n  monitoring --output=jsonpath="{.items..metadata.name}") -n monitoring  3000`
-Run `localhost:3000` to access 
+You will need to port forward the necessary pods to access the prometheus and grafana dashboards. Run the following commands to achieve this  
+- **Access Prometheus**  
+`kubectl port-forward -n monitoring prometheus-kube-prometheus-0 9090`  
+Run `localhost:9090` to access  
+- **Access Grafana**  
+`kubectl port-forward $(kubectl get  pods --selector=app=kube-prometheus-grafana -n  monitoring --output=jsonpath="{.items..metadata.name}") -n monitoring  3000`  
+Run `localhost:3000` to access
