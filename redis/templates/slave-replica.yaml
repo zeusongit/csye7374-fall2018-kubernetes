@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: redis-slave
-        image: docker.io/adikelkar4/csye7374:redisslave
+        image: docker.io/tata480/csye7374:redisslave
         resources:
           limits:
             cpu: "0.1"

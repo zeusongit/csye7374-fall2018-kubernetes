@@ -27,14 +27,14 @@ spec:
             path: /sys
       initContainers:
         - name: disable-thp
-          image: docker.io/adikelkar4/csye7374:redismaster
+          image: docker.io/tata480/csye7374:redismaster
           volumeMounts:
             - name: host-sys
               mountPath: /host-sys
           command: ["sh", "-c", "echo never > /host-sys/kernel/mm/transparent_hugepage/enabled"]
       containers:
       - name: redis-master
-        image: docker.io/adikelkar4/csye7374:redismaster
+        image: docker.io/tata480/csye7374:redismaster
         env:
         - name: REDIS_PASSWORD
           valueFrom:
