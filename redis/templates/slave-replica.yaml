@@ -47,6 +47,15 @@ spec:
         ports:
           - name: sentinel
             containerPort: 26379
+      - name: redis-exporter
+        image: oliver006/redis_exporter:v0.21.1
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: 32Mi
+        ports:
+        - containerPort: 9121
+          name: redis-metrics
       volumes:
         - name: data
           emptyDir: {}
