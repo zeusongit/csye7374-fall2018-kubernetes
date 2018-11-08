@@ -65,6 +65,8 @@ spec:
       - name: sentinel
         image: k8s.gcr.io/redis:v1
         env:
+          - name: redis-sentinel
+            value: "true"
           - name: SENTINEL
             value: "true"
         ports:
