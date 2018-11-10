@@ -65,6 +65,8 @@ spec:
       - name: sentinel
         image: k8s.gcr.io/redis:v1
         env:
+          - name: redis-sentinel
+            value: "true"
           - name: SENTINEL
             value: "true"
         ports:
@@ -78,3 +80,4 @@ spec:
             memory: 32Mi
         ports:
         - containerPort: 9121
+          name: redis-metrics
