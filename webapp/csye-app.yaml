@@ -28,10 +28,6 @@ spec:
           - name: myvolume
             mountPath: "/etc/secrets"
             readOnly: true
-        resources:
-          requests:
-            cpu: "0.1"
-            memory: "32Mi"
         env:
         - name: REDIS_PASSWORD
           valueFrom:
@@ -57,10 +53,16 @@ spec:
               name: redishost
               key: REDISHOST
         ports:
-        - containerPort: 9090
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
         readinessProbe:
           tcpSocket:
-            port: 9090
+            port: 8080
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:
