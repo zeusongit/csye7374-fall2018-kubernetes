@@ -22,9 +22,10 @@ http.createServer((req, res) => {
       return;
     }
     
-    res.write("PORT NAME : " + os.hostname() + "\n");
-    res.write("HIT COUNTER : " + reply + "\n");
-    res.write("Env Variables:\n" + JSON.stringify(process.env));
-    console.log(process.env)
+    res.write("You have reached csye7374 : " + os.hostname() + "\n");
+    // res.write("PORT NAME : " + os.hostname() + "\n");
+    // res.write("HIT COUNTER : " + reply + "\n");
+    // res.write("Env Variables:\n" + JSON.stringify(process.env));
+    // console.log(process.env)
   });
 }).listen(process.env.HIT_PORT);
