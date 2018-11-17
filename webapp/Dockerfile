@@ -15,5 +15,5 @@
 #CMD ["node", "app.js"]
 
 FROM node:7
-ADD app.js /app.js
+COPY node/app.js .
 ENTRYPOINT ["node", "app.js"]
