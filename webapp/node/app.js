@@ -40,7 +40,7 @@ console.log("Server starting...");
 var handler = function(request, response) {
   console.log("Received request from " + request.connection.remoteAddress);
   response.writeHead(200);
-  response.end("CSYE 7374: You've hit " + os.hostname() + "\n");
+  response.end("CSYE 7374: You've hit " + os.hostname() + " for V2\n");
 };
 
 var www = http.createServer(handler);
