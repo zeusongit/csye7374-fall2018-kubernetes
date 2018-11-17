@@ -1,5 +1,5 @@
-kubectl apply -f cluster-service-account.yaml
-kubectl apply -f cluster-role-binding.yaml
+kubectl apply -f templates/cluster-service-account.yaml
+kubectl apply -f templates/cluster-role-binding.yaml
 #kubectl apply -f cluster-service-account.yaml
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
