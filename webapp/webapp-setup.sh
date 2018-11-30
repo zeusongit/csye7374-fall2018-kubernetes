@@ -7,8 +7,3 @@ kubectl get configmaps redishost -o yaml
 
 kubectl apply -f csye-app.yaml
 kubectl apply -f csye-service.yaml
-
-sleep 10
-
-kubectl apply -f metrics/
-kubectl apply -f csye-autoscaler.yaml
