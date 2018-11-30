@@ -19,6 +19,7 @@ while true; do curl {LOADBALANCER-URL}; done
 - Check the dashboard. There should be additional pods for the webapp
 
 ### Cluster Autoscaling
+- Attach the IAM Policy `AutoScalingFullAccess`  to the kops group. This will give the kops user access to autoscale pods and clusters
 - Edit the min and max node count in the node instance group using this command
 ```
 kops edit ig nodes
