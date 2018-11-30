@@ -19,6 +19,15 @@ while true; do curl {LOADBALANCER-URL}; done
 - Check the dashboard. There should be additional pods for the webapp
 
 ### Cluster Autoscaling
+- Edit the min and max node count in the node instance group using this command
+```
+kops edit ig nodes
+```
+Once you finish editing, run a update and rolling-update on the cluster
+```
+kops update cluster --yes --name $NAME
+kops rolling-update cluster
+```
 - To deploy cluster autoscaling, edit the `scale-cluster.sh` in the `cluster` folder
 - Replace the variables environment variables as per your cluster configuration
 - Run the script
